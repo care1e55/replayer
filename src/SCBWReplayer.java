@@ -9,9 +9,11 @@ public class SCBWReplayer {
 
 	public static void main(String[] args) throws Exception {
 		ReplayParser repparse = new ReplayParser();
-		String currep = repparse.execParser(repparse.getCurrentReplay());
-		String duration = repparse.getDuration(currep);
-		System.out.println(duration);
+		Watcher watcher = new Watcher();
+		watcher.initLoadReplayScreen();
+		watcher.watchNextReplay();
+		
+		
 //		Mouser ms = new Mouser();
 		
 		
