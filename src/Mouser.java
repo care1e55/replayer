@@ -10,40 +10,34 @@ public class Mouser {
 	//wait loading 20 sec	
 	TimeUnit.SECONDS.sleep(20);
 	
-	//single player 534 244
-	robot.mouseMove(534, 244);
-	robot.mousePress(InputEvent.BUTTON1_MASK);
-	robot.mouseRelease(InputEvent.BUTTON1_MASK);
+	//single player
+	robot.keyPress(KeyEvent.VK_S);
+	robot.keyRelease(KeyEvent.VK_S);
 	TimeUnit.SECONDS.sleep(5);
 	
-	//expansion 708 443
-	robot.mouseMove(708, 443);
-	robot.mousePress(InputEvent.BUTTON1_MASK);
-	robot.mouseRelease(InputEvent.BUTTON1_MASK);
+	//expansion
+	robot.keyPress(KeyEvent.VK_E);
+	robot.keyRelease(KeyEvent.VK_E);
 	TimeUnit.SECONDS.sleep(5);
 	
-	//ok 862 533
-	robot.mouseMove(862, 533);
-	robot.mousePress(InputEvent.BUTTON1_MASK);
-	robot.mouseRelease(InputEvent.BUTTON1_MASK);
+	//ok 
+	robot.keyPress(KeyEvent.VK_O);
+	robot.keyRelease(KeyEvent.VK_O);
 	TimeUnit.SECONDS.sleep(5);
 	
-	//load reeplay 662 591
-	robot.mouseMove(662, 591);
-	robot.mousePress(InputEvent.BUTTON1_MASK);
-	robot.mouseRelease(InputEvent.BUTTON1_MASK);
+	//load reeplay 
+	robot.keyPress(KeyEvent.VK_R);
+	robot.keyRelease(KeyEvent.VK_R);
 	TimeUnit.SECONDS.sleep(5);
 	
-	//ok 862 533
-	robot.mouseMove(862, 533);
-	robot.mousePress(InputEvent.BUTTON1_MASK);
-	robot.mouseRelease(InputEvent.BUTTON1_MASK);
+	//ok 
+	robot.keyPress(KeyEvent.VK_O);
+	robot.keyRelease(KeyEvent.VK_O);
 	TimeUnit.SECONDS.sleep(5);
 	
-	//speedup 955 601
-	robot.mouseMove(955, 601);
-	robot.mousePress(InputEvent.BUTTON1_MASK);
-	robot.mouseRelease(InputEvent.BUTTON1_MASK);
+	//speedup 
+	robot.keyPress(KeyEvent.VK_U);
+	robot.keyRelease(KeyEvent.VK_U);
 	TimeUnit.SECONDS.sleep(5);
 	
 	//f5

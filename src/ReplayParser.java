@@ -36,26 +36,24 @@ public class ReplayParser {
 //	System.out.println(jsonObject.get("name").getAsString());
 	
 	
-	public String execParser(String replay) throws Exception {
-		String jsonString = null;
-		
+	public JsonObject execParser(String replay) throws Exception {
 		Runtime rt = Runtime.getRuntime();
 		System.out.println(goPath + " run " + scriptPath + " " + "\"" + replay + "\"");
 		Process pr = rt.exec(goPath + " run " + scriptPath + " " + "\"" + replay + "\"");
-		
-		   InputStream in = pr.getInputStream();
-		   String result = IOUtils.toString(in, StandardCharsets.UTF_8);
-		   System.out.println(result);
-		   
-//		   in.read()
-//		    int c;
-//		    while ((c = in.read()) != -1) {
-//		      System.out.println((char) c);
-//		    }
-//		    in.close();
-		
-		return jsonString;
+		InputStream in = pr.getInputStream();
+		String result = IOUtils.toString(in, StandardCharsets.UTF_8);
+		JsonObject jobj = new Gson().fromJson(result, JsonObject.class);
+		return jobj;
 	}
+	
+	public String getDuration(JsonObject repJSON) {
+		JsonParser jp = new JsonParser();
+//		String result = String.valueOf(Double.parseDouble(repJSON.get("Frames").toString())/23.81);
+//		String result = repJSON.get("Frames").toString();
+		String result = jp.parse(json);
+		return result;
+	}
+	
 	
 	//getNextReplay
 	public String getNextReplay() {		
