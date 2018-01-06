@@ -1,11 +1,13 @@
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class Watcher {
 	
+	String watchedDir = "d:\\!work\\!Study\\StarCraft Brood War\\maps\\watched\\";
 	static ArrayList<Replay> replays = new ArrayList<>();
 	static int currentReplayIndex = -1;
 	Robot robot = new Robot();
@@ -18,27 +20,22 @@ public class Watcher {
 	public void initLoadReplayScreen() throws Exception {
 		
 		//wait loading 20 sec	
-		TimeUnit.SECONDS.sleep(20);
+		TimeUnit.SECONDS.sleep(5);
 		
 		//single player
 		robot.keyPress(KeyEvent.VK_S);
 		robot.keyRelease(KeyEvent.VK_S);
-		TimeUnit.SECONDS.sleep(5);
+		TimeUnit.SECONDS.sleep(2);
 		
 		//expansion
 		robot.keyPress(KeyEvent.VK_E);
 		robot.keyRelease(KeyEvent.VK_E);
-		TimeUnit.SECONDS.sleep(5);
+		TimeUnit.SECONDS.sleep(2);
 		
 		//ok 
 		robot.keyPress(KeyEvent.VK_O);
 		robot.keyRelease(KeyEvent.VK_O);
-		TimeUnit.SECONDS.sleep(5);
-		
-		//load reeplay 
-		robot.keyPress(KeyEvent.VK_R);
-		robot.keyRelease(KeyEvent.VK_R);
-		TimeUnit.SECONDS.sleep(5);
+		TimeUnit.SECONDS.sleep(2);
 		
 	}
 	
@@ -46,16 +43,24 @@ public class Watcher {
 
 		Replay replay = NextReplay();
 		double waitSeconds = replay.getDuration();
+		System.out.println("Watching "+replay.getTitle()+". Duration: " + waitSeconds);
+		//load reeplay 
+		robot.keyPress(KeyEvent.VK_R);
+		robot.keyRelease(KeyEvent.VK_R);
+		TimeUnit.SECONDS.sleep(2);
 		
 		//ok 
 		robot.keyPress(KeyEvent.VK_O);
 		robot.keyRelease(KeyEvent.VK_O);
-		TimeUnit.SECONDS.sleep(5);
+		TimeUnit.SECONDS.sleep(2);
 		
 		//speedup 
 		robot.keyPress(KeyEvent.VK_U);
 		robot.keyRelease(KeyEvent.VK_U);
-		TimeUnit.SECONDS.sleep(5);
+		TimeUnit.SECONDS.sleep(1);
+		robot.keyPress(KeyEvent.VK_U);
+		robot.keyRelease(KeyEvent.VK_U);
+		TimeUnit.SECONDS.sleep(1);
 		
 		//f5
 		//need to define how many times press f5 from parsed winning team
@@ -79,7 +84,10 @@ public class Watcher {
 	    TimeUnit.SECONDS.sleep(5);
 	    
 	    //delete replay from stack and move to watched folder
-	    
+	    replay = Watcher.CurrentReplay();
+	    replays.remove(currentReplayIndex);
+	    File file = new File(replay.getPath());
+	    file.renameTo(new File( watchedDir + currentReplayIndex +".rep"));
 	    
 	    //then load again
 	}

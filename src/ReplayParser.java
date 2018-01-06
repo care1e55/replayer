@@ -40,7 +40,7 @@ public class ReplayParser {
 	
 	public static String getReplayJSON(String replay) throws Exception {
 		Runtime rt = Runtime.getRuntime();
-		System.out.println(goPath + " run " + scriptPath + " " + "\"" + replay + "\"");
+//		System.out.println(goPath + " run " + scriptPath + " " + "\"" + replay + "\"");
 		Process pr = rt.exec(goPath + " run " + scriptPath + " " + "\"" + replay + "\"");
 		InputStream in = pr.getInputStream();
 		String result = IOUtils.toString(in, StandardCharsets.UTF_8);

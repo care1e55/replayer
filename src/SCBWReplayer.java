@@ -12,7 +12,7 @@ public class SCBWReplayer {
 		Watcher watcher = new Watcher();
 		watcher.initLoadReplayScreen();
 		watcher.watchNextReplay();
-		
+		watcher.watchNextReplay();
 		
 //		Mouser ms = new Mouser();
 		
