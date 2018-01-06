@@ -29,6 +29,12 @@ public class Replay {
 				.get("Header")
 				.getAsJsonObject()
 				.get("Title").getAsString();
+		winnersSlot = Integer.parseInt(jp
+				.parse(repJSON)
+				.getAsJsonObject()
+				.get("Computed")
+				.getAsJsonObject()
+				.get("WinnerTeam").getAsString());
 		System.out.println("Initilized: " + title);
 		
 	}
