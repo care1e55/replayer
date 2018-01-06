@@ -11,12 +11,9 @@ public class SCBWReplayer {
 		ReplayParser repparse = new ReplayParser();
 		Watcher watcher = new Watcher();
 		watcher.initLoadReplayScreen();
+		for (Replay rep : watcher.replays) {
 		watcher.watchNextReplay();
-		watcher.watchNextReplay();
-		
-//		Mouser ms = new Mouser();
-		
-		
+		}
 	}
 
 }

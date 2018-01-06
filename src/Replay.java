@@ -11,7 +11,6 @@ public class Replay {
 	String repJSON;
 	String speed;
 	
-//	Replay(String repJSON) {
 	Replay(String repPath) throws Exception {
 		Path = repPath;
 		String repJSON = ReplayParser.getReplayJSON(Path);
@@ -22,7 +21,7 @@ public class Replay {
 				.getAsJsonObject()
 				.get("Frames").getAsString();
 		String result = String.valueOf(Math.round(Double.parseDouble(frames)/23.81));
-		Duration = Double.parseDouble(result);		
+		Duration = Double.parseDouble(result);
 		title = jp
 				.parse(repJSON)
 				.getAsJsonObject()

@@ -10,8 +10,6 @@ import com.google.gson.JsonParser;
 
 
 public class ReplayParser {
-//parse at runtime using go parser
-//	static int currentReplayIndex = 0;
 	static String scriptPath = "\"D:\\Users\\user\\go\\src\\github.com\\icza\\screp\\cmd\\screp\\screp.go\"";
 	static String replayDirPath = "D:\\!work\\!Study\\StarCraft Brood War\\maps\\replays";
 	static String goPath = "D:\\progz\\Go\\bin\\go.exe";
@@ -30,7 +28,6 @@ public class ReplayParser {
 				try {
 					replays.add(new Replay(s.toString()));
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			});
@@ -46,28 +43,4 @@ public class ReplayParser {
 		String result = IOUtils.toString(in, StandardCharsets.UTF_8);
 		return result;
 	}
-	
-//	public String getDuration(String repJSON) {
-//		JsonParser jp = new JsonParser();
-//		String frames = 	jp.parse(repJSON)
-//							.getAsJsonObject()
-//							.get("Header")
-//							.getAsJsonObject()
-//							.get("Frames").getAsString();
-//		String result = String.valueOf(Math.round(Double.parseDouble(frames)/23.81));
-//		return result;
-//	}
-	
-//	//getNextReplay
-//	public String NextReplay() {
-//		currentReplayIndex++;
-//		String replay = replays.get(currentReplayIndex);
-//		return replay;
-//	}
-//	
-//	public String CurrentReplay() {
-//		String replay = replays.get(currentReplayIndex);
-//		return replay;
-//	}
-	
 }

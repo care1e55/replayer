@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 public class Watcher {
 	
 	String watchedDir = "d:\\!work\\!Study\\StarCraft Brood War\\maps\\watched\\";
-	static ArrayList<Replay> replays = new ArrayList<>();
+	public ArrayList<Replay> replays = new ArrayList<>();
 	static int currentReplayIndex = -1;
 	Robot robot = new Robot();
 	ReplayParser parser = new ReplayParser();
@@ -43,7 +43,7 @@ public class Watcher {
 
 		Replay replay = NextReplay();
 		double waitSeconds = replay.getDuration();
-		System.out.println("Watching "+replay.getTitle()+". Duration: " + waitSeconds);
+		System.out.println("Watching "+replay.getTitle()+". Duration: " + waitSeconds + " WinnerSlot: " + replay.winnersSlot );
 		//load reeplay 
 		robot.keyPress(KeyEvent.VK_R);
 		robot.keyRelease(KeyEvent.VK_R);
@@ -71,7 +71,7 @@ public class Watcher {
 	    robot.mouseMove(1000, 500);
 	    
 	    //wait game ends
-	    TimeUnit.SECONDS.sleep((long) waitSeconds);
+	    TimeUnit.SECONDS.sleep((long) waitSeconds+30);
 	    
 	    //press x to exit
 	    robot.keyPress(KeyEvent.VK_X);
@@ -84,22 +84,21 @@ public class Watcher {
 	    TimeUnit.SECONDS.sleep(5);
 	    
 	    //delete replay from stack and move to watched folder
-	    replay = Watcher.CurrentReplay();
-	    replays.remove(currentReplayIndex);
+//	    replay = Watcher.CurrentReplay();
 	    File file = new File(replay.getPath());
 	    file.renameTo(new File( watchedDir + currentReplayIndex +".rep"));
-	    
+//	    replays.remove(currentReplayIndex);
 	    //then load again
 	}
 	
 	//getNextReplay
-		public static Replay NextReplay() {
+		public Replay NextReplay() {
 			currentReplayIndex++;
 			Replay replay = replays.get(currentReplayIndex);
 			return replay;
 		}
 		
-		public static Replay CurrentReplay() {
+		public Replay CurrentReplay() {
 			Replay replay = replays.get(currentReplayIndex);
 			return replay;
 		}
