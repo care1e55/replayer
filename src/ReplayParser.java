@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -31,29 +32,25 @@ public class ReplayParser {
 		} 
 	}
 	
-	
-//	JsonObject jsonObject = new JsonParser().parse("{\"name\": \"John\"}").getAsJsonObject();
-//	System.out.println(jsonObject.get("name").getAsString());
-	
-	
-	public JsonObject execParser(String replay) throws Exception {
+	public String execParser(String replay) throws Exception {
 		Runtime rt = Runtime.getRuntime();
 		System.out.println(goPath + " run " + scriptPath + " " + "\"" + replay + "\"");
 		Process pr = rt.exec(goPath + " run " + scriptPath + " " + "\"" + replay + "\"");
 		InputStream in = pr.getInputStream();
 		String result = IOUtils.toString(in, StandardCharsets.UTF_8);
-		JsonObject jobj = new Gson().fromJson(result, JsonObject.class);
-		return jobj;
-	}
-	
-	public String getDuration(JsonObject repJSON) {
-		JsonParser jp = new JsonParser();
-//		String result = String.valueOf(Double.parseDouble(repJSON.get("Frames").toString())/23.81);
-//		String result = repJSON.get("Frames").toString();
-		String result = jp.parse(json);
 		return result;
 	}
 	
+	public String getDuration(String repJSON) {
+		JsonParser jp = new JsonParser();
+		String frames = 	jp.parse(repJSON)
+							.getAsJsonObject()
+							.get("Header")
+							.getAsJsonObject()
+							.get("Frames").getAsString();
+		String result = String.valueOf(Math.round(Double.parseDouble(frames)/23.81));
+		return result;
+	}
 	
 	//getNextReplay
 	public String getNextReplay() {		
@@ -66,6 +63,5 @@ public class ReplayParser {
 		String replay = replays.get(currentReplayIndex);
 		return replay;
 	}
-	
 	
 }
