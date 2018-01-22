@@ -1,13 +1,20 @@
 package scbwr;
+import java.io.File;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Stream;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import com.google.gson.JsonParser;
+
+import scbwr.pageParser;
+import scbwr.urlCrawler;
 
 
 public class ReplayParser {
@@ -36,12 +43,63 @@ public class ReplayParser {
 		return replays;
 	}
 	
+	public ArrayList<Replay> getReplaysOnPage (int pageNum) throws Exception {
+		ArrayList<Replay> replays = new ArrayList<>();
+		replays.clear();
+		String page;
+//	    for(int i = 2; i < 98; i++) {
+	    	page = urlCrawler.getUrlContents("http://www.teamliquid.net/replay/index.php?currentpage="+pageNum);
+//	    	System.out.println(page);
+	    	pageParser pp = new pageParser(page);
+	    	ArrayList<String> reps = pp.getRepsArr();
+			StringBuilder urlString = new StringBuilder();
+			for( String rep : reps ) {
+				urlString.append("http://www.teamliquid.net/replay/"
+						+ "download.php?replay="
+						+ rep);
+				File file = new File(rep + ".rep");
+				URL url = new URL(urlString.toString());
+				FileUtils.copyURLToFile(url, file);
+				try {
+					replays.add(new Replay(file.getPath().toString()));
+					urlString.delete(0,urlString.length());
+				} catch(Exception e) {
+					file.delete();
+					urlString.delete(0,urlString.length());
+					continue;
+				}
+			}
+		return replays;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public Replay getReplay() {
+		
+		//download into replaydir and return initilized
+		
+		return null;
+	}
+	
+	
 	public static String getReplayJSON(String replay) throws Exception {
 		Runtime rt = Runtime.getRuntime();
-//		System.out.println(goPath + " run " + scriptPath + " " + "\"" + replay + "\"");
+		System.out.println(goPath + " run " + scriptPath + " " + "\"" + replay + "\"");
+		try {
 		Process pr = rt.exec(goPath + " run " + scriptPath + " " + "\"" + replay + "\"");
 		InputStream in = pr.getInputStream();
 		String result = IOUtils.toString(in, StandardCharsets.UTF_8);
+		System.out.println(result);
 		return result;
+		} catch(Exception e) {
+			return null;
+		}
+		
 	}
 }

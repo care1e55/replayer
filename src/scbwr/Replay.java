@@ -15,6 +15,8 @@ public class Replay {
 	Replay(String repPath) throws Exception {
 		Path = repPath;
 		String repJSON = ReplayParser.getReplayJSON(Path);
+		System.out.println(repJSON);
+		if (repJSON != null ) {
 		JsonParser jp = new JsonParser();
 		String frames = 	jp.parse(repJSON)
 				.getAsJsonObject()
@@ -36,7 +38,7 @@ public class Replay {
 				.getAsJsonObject()
 				.get("WinnerTeam").getAsString());
 		System.out.println("Initilized: " + title);
-		
+		} else throw new Exception();
 	}
 	
 	public double getDuration() throws Exception {

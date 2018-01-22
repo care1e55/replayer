@@ -14,8 +14,9 @@ public class Watcher {
 	Robot robot = new Robot();
 	ReplayParser parser = new ReplayParser();
 		
-	Watcher () throws Exception {
-		replays = parser.getReplays();
+	Watcher (int PageNum) throws Exception {
+		replays = parser.getReplaysOnPage(PageNum);
+		System.out.println(replays);
 	}
 	
 	public void initLoadReplayScreen() throws Exception {
