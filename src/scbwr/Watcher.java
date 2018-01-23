@@ -1,6 +1,5 @@
 package scbwr;
 import java.awt.Robot;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -9,15 +8,14 @@ import java.util.concurrent.TimeUnit;
 public class Watcher {
 	
 	String watchedDir = "d:\\!work\\!Study\\StarCraft Brood War\\maps\\watched\\";
-	public ArrayList<Replay> replays = new ArrayList<>();
+	String page;
+	String currentReplay;
 	static int currentReplayIndex = -1;
 	static int ReplayCounter = 0;
 	Robot robot = new Robot();
 	ReplayParser parser = new ReplayParser();
-	pageParser pparser;
 	public ArrayList<String> replaysS = new ArrayList<>();
-	String page;
-	String currentReplay;
+	pageParser pparser;
 		
 	Watcher (int PageNum) throws Exception {
 		page = urlCrawler.getUrlContents("http://www.teamliquid.net/replay/index.php?currentpage="+PageNum);
@@ -105,17 +103,4 @@ public class Watcher {
 		if (ReplayCounter > replaysS.size()) return false;
 		return true;
 	}
-	
-	//getNextReplay
-		public Replay NextReplay() {
-			currentReplayIndex++;
-			Replay replay = replays.get(currentReplayIndex);
-			return replay;
-		}
-		
-		public Replay CurrentReplay() {
-			Replay replay = replays.get(currentReplayIndex);
-			return replay;
-		}
-	
 }
