@@ -11,10 +11,14 @@ public class SCBWReplayer {
 	public static void main(String[] args) throws Exception {
 		ReplayParser repparse = new ReplayParser();
 		Watcher watcher = new Watcher(50);
-//		watcher.initLoadReplayScreen();
-//		for (Replay rep : watcher.replays) {
-//		watcher.watchNextReplay();
-//		}
+		watcher.initLoadReplayScreen();
+		while(watcher.hasNext()) {
+			try {
+		watcher.watchNextReplay();			
+			} catch (Exception e) {
+				continue;
+			}
+		}
 	}
 
 }

@@ -11,12 +11,18 @@ public class Watcher {
 	String watchedDir = "d:\\!work\\!Study\\StarCraft Brood War\\maps\\watched\\";
 	public ArrayList<Replay> replays = new ArrayList<>();
 	static int currentReplayIndex = -1;
+	static int ReplayCounter = 0;
 	Robot robot = new Robot();
 	ReplayParser parser = new ReplayParser();
+	pageParser pparser;
+	public ArrayList<String> replaysS = new ArrayList<>();
+	String page;
+	String currentReplay;
 		
 	Watcher (int PageNum) throws Exception {
-		replays = parser.getReplaysOnPage(PageNum);
-		System.out.println(replays);
+		page = urlCrawler.getUrlContents("http://www.teamliquid.net/replay/index.php?currentpage="+PageNum);
+		pparser = new pageParser(page);
+		replaysS = pparser.getRepsArr();
 	}
 	
 	public void initLoadReplayScreen() throws Exception {
@@ -42,8 +48,12 @@ public class Watcher {
 	}
 	
 	public void watchNextReplay() throws Exception {
-
-		Replay replay = NextReplay();
+		currentReplay = replaysS.get(currentReplayIndex++);
+		Replay replay = parser.getReplay(currentReplay);
+		ReplayCounter++;
+		if (replay==null) {
+			throw new Exception("replay is null");
+		}
 		double waitSeconds = replay.getDuration();
 		System.out.println("Watching "+replay.getTitle()+". Duration: " + waitSeconds + " WinnerSlot: " + replay.winnersSlot );
 		//load reeplay 
@@ -86,11 +96,14 @@ public class Watcher {
 	    TimeUnit.SECONDS.sleep(5);
 	    
 	    //delete replay from stack and move to watched folder
-//	    replay = Watcher.CurrentReplay();
 	    File file = new File(replay.getPath());
-	    file.renameTo(new File( watchedDir + currentReplayIndex +".rep"));
-//	    replays.remove(currentReplayIndex);
+	    file.renameTo(new File( watchedDir + currentReplay +".rep"));
 	    //then load again
+	}
+	
+	public boolean hasNext() {
+		if (ReplayCounter > replaysS.size()) return false;
+		return true;
 	}
 	
 	//getNextReplay

@@ -1,6 +1,7 @@
 package scbwr;
 import java.io.File;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -80,11 +81,25 @@ public class ReplayParser {
 	
 	
 	
-	public Replay getReplay() {
-		
+	public Replay getReplay(String rep) throws Exception {
+		StringBuilder urlString = new StringBuilder();
+		Replay replay;
 		//download into replaydir and return initilized
-		
-		return null;
+		urlString.append("http://www.teamliquid.net/replay/"
+				+ "download.php?replay="
+				+ rep);
+		File file = new File(rep + ".rep");
+		URL url = new URL(urlString.toString());
+		FileUtils.copyURLToFile(url, file);
+		try {
+			replay = new Replay(file.getPath().toString());
+			urlString.delete(0,urlString.length());
+			return replay;
+		} catch(Exception e) {
+			file.delete();
+			urlString.delete(0,urlString.length());
+			return null;
+		}		
 	}
 	
 	
