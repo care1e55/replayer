@@ -16,7 +16,7 @@ public class Watcher {
 	ReplayParser parser = new ReplayParser();
 	public ArrayList<String> replaysS = new ArrayList<>();
 	pageParser pparser;
-		
+	
 	Watcher (int PageNum) throws Exception {
 		page = urlCrawler.getUrlContents("http://www.teamliquid.net/replay/index.php?currentpage="+PageNum);
 		pparser = new pageParser(page);
@@ -29,16 +29,19 @@ public class Watcher {
 		TimeUnit.SECONDS.sleep(5);
 		
 		//single player
+		WindowFinder.findWindow();
 		robot.keyPress(KeyEvent.VK_S);
 		robot.keyRelease(KeyEvent.VK_S);
 		TimeUnit.SECONDS.sleep(2);
 		
 		//expansion
+		WindowFinder.findWindow();
 		robot.keyPress(KeyEvent.VK_E);
 		robot.keyRelease(KeyEvent.VK_E);
 		TimeUnit.SECONDS.sleep(2);
 		
 		//ok 
+		WindowFinder.findWindow();
 		robot.keyPress(KeyEvent.VK_O);
 		robot.keyRelease(KeyEvent.VK_O);
 		TimeUnit.SECONDS.sleep(2);
@@ -55,25 +58,30 @@ public class Watcher {
 		double waitSeconds = replay.getDuration();
 		System.out.println("Watching "+replay.getTitle()+". Duration: " + waitSeconds + " WinnerSlot: " + replay.winnersSlot );
 		//load reeplay 
+		WindowFinder.findWindow();
 		robot.keyPress(KeyEvent.VK_R);
 		robot.keyRelease(KeyEvent.VK_R);
 		TimeUnit.SECONDS.sleep(2);
 		
 		//ok 
+		WindowFinder.findWindow();
 		robot.keyPress(KeyEvent.VK_O);
 		robot.keyRelease(KeyEvent.VK_O);
 		TimeUnit.SECONDS.sleep(2);
 		
 		//speedup 
+		WindowFinder.findWindow();
 		robot.keyPress(KeyEvent.VK_U);
 		robot.keyRelease(KeyEvent.VK_U);
 		TimeUnit.SECONDS.sleep(1);
+		WindowFinder.findWindow();
 		robot.keyPress(KeyEvent.VK_U);
 		robot.keyRelease(KeyEvent.VK_U);
 		TimeUnit.SECONDS.sleep(1);
 		
 		//f5
 		//need to define how many times press f5 from parsed winning team
+		WindowFinder.findWindow();
 		robot.keyPress(KeyEvent.VK_F5);
 	    robot.keyRelease(KeyEvent.VK_F5);
 	    
@@ -84,11 +92,13 @@ public class Watcher {
 	    TimeUnit.SECONDS.sleep((long) waitSeconds+30);
 	    
 	    //press x to exit
+		WindowFinder.findWindow();
 	    robot.keyPress(KeyEvent.VK_X);
 	    robot.keyRelease(KeyEvent.VK_X);
 	    TimeUnit.SECONDS.sleep(5);
 	    	    
 	    //press o for ok
+		WindowFinder.findWindow();
 	    robot.keyPress(KeyEvent.VK_O);
 	    robot.keyRelease(KeyEvent.VK_O);
 	    TimeUnit.SECONDS.sleep(5);
