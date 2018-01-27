@@ -5,7 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class Watcher {
+public class Watcher implements Runnable {
 	
 	String watchedDir = "d:\\!work\\!Study\\StarCraft Brood War\\maps\\watched\\";
 	String page;
@@ -26,7 +26,9 @@ public class Watcher {
 	public void initLoadReplayScreen() throws Exception {
 		
 		//wait loading 20 sec	
+		WindowFinder.findWindow();
 		TimeUnit.SECONDS.sleep(5);
+		WindowFinder.findWindow();
 		
 		//single player
 		WindowFinder.findWindow();
@@ -47,6 +49,22 @@ public class Watcher {
 		TimeUnit.SECONDS.sleep(2);
 		
 	}
+	
+	
+	public void run() {
+		
+			try {
+				initLoadReplayScreen();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
+			while(hasNext()) {
+				try {
+				watchNextReplay();
+				} catch (Exception e) {continue;}
+					}
+		}
 	
 	public void watchNextReplay() throws Exception {
 		currentReplay = replaysS.get(currentReplayIndex++);
@@ -89,7 +107,7 @@ public class Watcher {
 	    robot.mouseMove(1000, 500);
 	    
 	    //wait game ends
-	    TimeUnit.SECONDS.sleep((long) waitSeconds+30);
+	    TimeUnit.SECONDS.sleep((long) waitSeconds+20);
 	    
 	    //press x to exit
 		WindowFinder.findWindow();

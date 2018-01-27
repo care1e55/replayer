@@ -15,6 +15,7 @@ import javax.swing.JTextPane;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class scbwFrame  extends JFrame  {
@@ -39,22 +40,20 @@ public class scbwFrame  extends JFrame  {
 		JButton btnStartWatching = new JButton("Start watching");
 		btnStartWatching.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {	
+				try {
 				Runtime rt = Runtime.getRuntime();
 				System.out.println(bwexec);
 				rt.exec("cmd /C start "+bwexec);
-				rt.exec(canrepexec);
+					rt.exec(canrepexec);
 				Watcher watcher = new Watcher(Integer.parseInt(PageTxT.getText()));
-				watcher.initLoadReplayScreen();
-				while(watcher.hasNext()) {
-					try {
-				watcher.watchNextReplay();			
-					} catch (Exception e) {continue;}
-						}
-				} catch (Exception e1) {e1.printStackTrace();}
-					}
-		});
-		btnStartWatching.setBounds(10, 11, 105, 23);
+				Thread myThready = new Thread(watcher);
+				myThready.start(); 
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				}
+			});
+		btnStartWatching.setBounds(10, 11, 134, 23);
 		contentPane.add(btnStartWatching);
 		
 		PageTxT = new JTextField();
@@ -71,7 +70,7 @@ public class scbwFrame  extends JFrame  {
 		
 		textPane = new JTextPane();
 		doc = textPane.getStyledDocument();
-		textPane.setBounds(10, 79, 422, 183);
+		textPane.setBounds(0, 0, 422, 183);
 		contentPane.add(textPane);
 		
 		JScrollPane jsp = new JScrollPane(textPane);
