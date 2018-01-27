@@ -39,7 +39,7 @@ public class Watcher {
 		robot.keyPress(KeyEvent.VK_E);
 		robot.keyRelease(KeyEvent.VK_E);
 		TimeUnit.SECONDS.sleep(2);
-		
+
 		//ok 
 		WindowFinder.findWindow();
 		robot.keyPress(KeyEvent.VK_O);
@@ -105,7 +105,8 @@ public class Watcher {
 	    
 	    //delete replay from stack and move to watched folder
 	    File file = new File(replay.getPath());
-	    file.renameTo(new File( watchedDir + currentReplay +".rep"));
+	    file.delete();
+//	    file.renameTo(new File( watchedDir + currentReplay +".rep"));
 	    //then load again
 	}
 	
