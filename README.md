@@ -5,6 +5,14 @@ Uses Go script to parse replay file to get duration.
 Replays in cycle.  
 
 TODO:  
-Crawler  
-Fix playing order (rename or crawl in folder)  
-Hook SCBW window  
+		//* Crawler DONE  
+		//* Fix playing order (rename or crawl in folder)   DONE
+		//* Hook SCBW window   DONE
+		//* Swing frame; DONE
+		//* The page have to be passed as parameter clicking radio button; DONE
+		//* The page has to be initial and the program has to go further; DONE
+		//* Add output console; DONE
+		//* Automate scbw and camrep execution; DONE
+		//* Multithreading DONE
+		//* close all on close
+		//* use Streams to output to consol
