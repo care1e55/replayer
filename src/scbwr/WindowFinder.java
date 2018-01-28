@@ -32,8 +32,8 @@ public static void findWindow() {
             if (wText.isEmpty()) {
                 return true;
             }
-            System.out.println("Found window with text " + hWnd
-                    + ", total " + ++count + " Text: " + wText);
+//            System.out.println("Found window with text " + hWnd
+//                    + ", total " + ++count + " Text: " + wText);
             if (wText
                     .equals("Brood War")) {
                 user32.SetForegroundWindow(hWnd);

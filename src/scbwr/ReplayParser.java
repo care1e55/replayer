@@ -37,12 +37,12 @@ public class ReplayParser {
 	
 	public static String getReplayJSON(String replay) throws Exception {
 		Runtime rt = Runtime.getRuntime();
-		System.out.println(goPath + " run " + scriptPath + " " + "\"" + replay + "\"");
+//		System.out.println(goPath + " run " + scriptPath + " " + "\"" + replay + "\"");
 		try {
 		Process pr = rt.exec(goPath + " run " + scriptPath + " " + "\"" + replay + "\"");
 		InputStream in = pr.getInputStream();
 		String result = IOUtils.toString(in, StandardCharsets.UTF_8);
-		System.out.println(result);
+//		System.out.println(result);
 		return result;
 		} catch(Exception e) {
 			return null;

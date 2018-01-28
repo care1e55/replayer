@@ -5,6 +5,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.text.StyledDocument;
+
 public class Watcher implements Runnable {
 	
 	String watchedDir = "d:\\!work\\!Study\\StarCraft Brood War\\maps\\watched\\";
@@ -16,20 +18,30 @@ public class Watcher implements Runnable {
 	ReplayParser parser = new ReplayParser();
 	public ArrayList<String> replaysS = new ArrayList<>();
 	pageParser pparser;
+	int PageNumber;
+	StyledDocument output;
 	
-	Watcher (int PageNum) throws Exception {
-		page = urlCrawler.getUrlContents("http://www.teamliquid.net/replay/index.php?currentpage="+PageNum);
+	Watcher (int PageNum, StyledDocument doc) throws Exception {
+		output = doc;
+		PageNumber = PageNum;
+		page = urlCrawler.getUrlContents("http://www.teamliquid.net/replay/index.php?currentpage="+PageNumber);
+		pparser = new pageParser(page);
+		replaysS = pparser.getRepsArr();
+	}
+
+	public void nextpage() throws Exception {
+		PageNumber++;
+		if (PageNumber > 99) throw new Exception();
+		page = urlCrawler.getUrlContents("http://www.teamliquid.net/replay/index.php?currentpage="+PageNumber);
 		pparser = new pageParser(page);
 		replaysS = pparser.getRepsArr();
 	}
 	
 	public void initLoadReplayScreen() throws Exception {
-		
 		//wait loading 20 sec	
 		WindowFinder.findWindow();
 		TimeUnit.SECONDS.sleep(5);
-		WindowFinder.findWindow();
-		
+
 		//single player
 		WindowFinder.findWindow();
 		robot.keyPress(KeyEvent.VK_S);
@@ -52,7 +64,6 @@ public class Watcher implements Runnable {
 	
 	
 	public void run() {
-		
 			try {
 				initLoadReplayScreen();
 			} catch (Exception e1) {
@@ -62,8 +73,10 @@ public class Watcher implements Runnable {
 			while(hasNext()) {
 				try {
 				watchNextReplay();
+				if(!hasNext()) nextpage();
 				} catch (Exception e) {continue;}
 					}
+			
 		}
 	
 	public void watchNextReplay() throws Exception {
@@ -74,7 +87,12 @@ public class Watcher implements Runnable {
 			throw new Exception("replay is null");
 		}
 		double waitSeconds = replay.getDuration();
-		System.out.println("Watching "+replay.getTitle()+". Duration: " + waitSeconds + " WinnerSlot: " + replay.winnersSlot );
+		output.insertString(output.getLength(), 
+				"Watching "+replay.getTitle()+
+				". Duration: " + waitSeconds + 
+				" WinnerSlot: " + replay.winnersSlot 
+				, null);
+//		System.out.println("Watching "+replay.getTitle()+". Duration: " + waitSeconds + " WinnerSlot: " + replay.winnersSlot );
 		//load reeplay 
 		WindowFinder.findWindow();
 		robot.keyPress(KeyEvent.VK_R);
